@@ -25,7 +25,12 @@ void	resched(void)		/* Assumes interrupts are disabled	*/
 	ptold = &proctab[currpid];
 
 	if (ptold->prstate == PR_CURR) {  /* Process remains eligible */
+#ifndef LF_FCFS
 		if (ptold->prprio > firstkey(readylist)) {
+#else
+   /* With FCFS if we are even with the first the keep going */
+   if (ptold->prprio >= firstkey(readylist)) {
+#endif
 			return;
 		}
 

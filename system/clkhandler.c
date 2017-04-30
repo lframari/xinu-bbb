@@ -53,6 +53,8 @@ void	clkhandler()
 
 	if((--preempt) == 0) {
 		preempt = QUANTUM;
+#ifndef LF_FCFS
 		resched();
+#endif
 	}
 }

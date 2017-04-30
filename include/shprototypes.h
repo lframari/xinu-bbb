@@ -75,3 +75,7 @@ extern	shellcmd  xsh_softreset	(int32, char *[]);
 
 /* in file xsh_ledctl.c */
 extern	shellcmd  xsh_ledctl	(int32, char *[]);
+
+/* in file xsh_fcfsvalidate.c */
+extern	shellcmd  xsh_fcfsvalidate	(int32, char *[]);
+

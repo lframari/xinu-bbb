@@ -42,7 +42,12 @@ pid32	create(
 
 	/* initialize process table entry for new process */
 	prptr->prstate = PR_SUSP;	/* initial state is suspended	*/
+#ifndef LF_FCFS
 	prptr->prprio = priority;
+#else
+  /* In first come first serve all processes are equal */
+  prptr->prprio = INITPRIO;
+#endif
 	prptr->prstkbase = (char *)saddr;
 	prptr->prstklen = ssize;
 	prptr->prname[PNMLEN-1] = NULLCH;

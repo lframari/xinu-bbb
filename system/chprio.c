@@ -22,7 +22,12 @@ pri16	chprio(
 	}
 	prptr = &proctab[pid];
 	oldprio = prptr->prprio;
+#ifndef LF_FCFS
+  /* One cannot change priority. I considered making this a system
+     error but I was not sure if it would affect some other component
+     of the system so it does not really do anything now. */
 	prptr->prprio = newprio;
+#endif
 	restore(mask);
 	return oldprio;
 }
