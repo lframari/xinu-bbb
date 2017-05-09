@@ -8,6 +8,12 @@ extern	int32	slnonempty;	/* nonzero if sleepq is nonempty	*/
 extern	int32	*sltop;		/* ptr to key in first item on sleepq	*/
 extern	uint32	preempt;	/* preemption counter			*/
 
+#ifdef LF_MALLEABLE_PRIORITY
+extern uint32 cpu_eval_countdown; /* Countdown until CPU usage evaluation */
+
+#define CPU_EVAL_QUANTUM 1000  /* One second CPU Eval time */
+#endif
+
 struct am335x_timer1ms {
 	uint32	tidr;		/* Identification register	*/
 	uint32	res1[3];	/* Reserved			*/

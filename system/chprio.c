@@ -23,6 +23,20 @@ pri16	chprio(
 	prptr = &proctab[pid];
 	oldprio = prptr->prprio;
 	prptr->prprio = newprio;
+  
+#ifdef LF_MALLEABLE_PRIORITY
+  /* Make sure we are still in the proper priority range if malleable */
+  if (0 != prptr->malleable) {
+    if (MIN_MALLEABLE_PRIORITY > prptr->prprio) {
+      /* Too low cap the minimum */
+      prptr->prprio = MIN_MALLEABLE_PRIORITY;
+    }
+    else if (MAX_MALLEABLE_PRIORITY < prptr->prprio) {
+      /* Too high cap the maximum */
+      prptr->prprio = MAX_MALLEABLE_PRIORITY;
+    }
+  }
+#endif
 	restore(mask);
 	return oldprio;
 }

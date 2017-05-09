@@ -155,6 +155,16 @@ static	void	sysinit()
 
 	kprintf(CONSOLE_RESET);
 	kprintf("\n%s\n\n", VERSION);
+  
+#ifdef LF_MALLEABLE_PRIORITY
+
+  /* CPU Usage levels */
+ lw_cpu_mark = DEFAULT_CPU_LW_MARK;    /* Low Water Mark */
+ hw_cpu_mark = DEFAULT_CPU_HW_MARK;    /* High Water Mark */
+ 
+ display_sched_stats = 1;               /* Display some stats */
+ 
+#endif
 
 	/* Platform Specific Initialization */
 

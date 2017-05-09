@@ -75,3 +75,9 @@ extern	shellcmd  xsh_softreset	(int32, char *[]);
 
 /* in file xsh_ledctl.c */
 extern	shellcmd  xsh_ledctl	(int32, char *[]);
+
+/* in file xsh_priotest.c */
+extern	shellcmd  xsh_priotest	(int32, char *[]);
+
+/* in file xsh_xsh_ctrlmalleablepriotest.c */
+extern	shellcmd  xsh_ctrlmalleable	(int32, char *[]);

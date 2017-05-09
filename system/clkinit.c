@@ -7,6 +7,12 @@ uint32  count1000;              /* ms since last clock tick             */
 qid16	sleepq;			/* Queue of sleeping processes		*/
 uint32	preempt;		/* Preemption counter			*/
 
+#ifdef LF_MALLEABLE_PRIORITY
+
+uint32 cpu_eval_countdown; /* Countdown until CPU usage evaluation */
+
+#endif
+
 /*------------------------------------------------------------------------
  * clkinit  -  Initialize the clock and sleep queue at startup
  *------------------------------------------------------------------------
@@ -48,6 +54,10 @@ void	clkinit(void)
 	csrptr->tpir = 1000000;
 	csrptr->tnir = 0;
 	csrptr->tldr = 0xFFFFFFFF - 26000;
+  
+#ifdef LF_MALLEABLE_PRIORITY
+  cpu_eval_countdown = CPU_EVAL_QUANTUM; 
+#endif
 
 	/* Set the timer to auto reload */
 

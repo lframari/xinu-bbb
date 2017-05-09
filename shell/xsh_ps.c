@@ -37,7 +37,7 @@ shellcmd xsh_ps(int nargs, char *args[])
 	}
 
 	/* Print header for items from the process table */
-
+#ifndef LF_MALLEABLE_PRIORITY
 	printf("%3s %-16s %5s %4s %4s %10s %-10s %10s\n",
 		   "Pid", "Name", "State", "Prio", "Ppid", "Stack Base",
 		   "Stack Ptr", "Stack Size");
@@ -45,6 +45,18 @@ shellcmd xsh_ps(int nargs, char *args[])
 	printf("%3s %-16s %5s %4s %4s %10s %-10s %10s\n",
 		   "---", "----------------", "-----", "----", "----",
 		   "----------", "----------", "----------");
+#else
+  printf("%3s %-16s %5s %4s %4s %10s %-10s %10s %9s %9s\n",
+		   "Pid", "Name", "State", "Prio", "Ppid", "Stack Base",
+		   "Stack Ptr", "Stack Size",
+       "Malleable", "CPU Usage");
+
+	printf("%3s %-16s %5s %4s %4s %10s %-10s %10s %9s %9s\n",
+		   "---", "----------------", "-----", "----", "----",
+		   "----------", "----------", "----------",
+       "---------", "---------");
+#endif
+  
 
 	/* Output information for each process */
 
@@ -53,10 +65,19 @@ shellcmd xsh_ps(int nargs, char *args[])
 		if (prptr->prstate == PR_FREE) {  /* skip unused slots	*/
 			continue;
 		}
+    
+#ifndef LF_MALLEABLE_PRIORITY
 		printf("%3d %-16s %s %4d %4d 0x%08X 0x%08X %8d\n",
 			i, prptr->prname, pstate[(int)prptr->prstate],
 			prptr->prprio, prptr->prparent, prptr->prstkbase,
 			prptr->prstkptr, prptr->prstklen);
+#else
+    printf("%3d %-16s %s %4d %4d 0x%08X 0x%08X %8d %9d %8d\n",
+			i, prptr->prname, pstate[(int)prptr->prstate],
+			prptr->prprio, prptr->prparent, prptr->prstkbase,
+			prptr->prstkptr, prptr->prstklen,
+      prptr->malleable, (int)prptr->cpu_usage);
+#endif
 	}
 	return 0;
 }

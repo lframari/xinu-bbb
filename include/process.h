@@ -52,10 +52,38 @@ struct procent {		/* Entry in the process table		*/
 	umsg32	prmsg;		/* Message sent to this process		*/
 	bool8	prhasmsg;	/* Nonzero iff msg is valid		*/
 	int16	prdesc[NDESC];	/* Device descriptors for process	*/
+#ifdef LF_MALLEABLE_PRIORITY
+  uint16 malleable; /* Indicates if the process is malleable */
+  uint16 cpu_usage; /* For malleable processes this flag indicates the CPU usage*/
+#endif
 };
 
 /* Marker for the top of a process stack (used to help detect overflow)	*/
 #define	STACKMAGIC	0x0A0AAAA9
+
+#ifdef LF_MALLEABLE_PRIORITY
+/* CPU Usage levels */
+extern uint16 lw_cpu_mark;    /* Low Water Mark */
+extern uint16 hw_cpu_mark;    /* High Water Mark */
+extern uint32  display_sched_stats;  /* Indicates if CPU scheduling status should be displayed */ 
+
+#define CPU_USAGE_IGNORE  (uint16)0xffff    /* CPU Usage is not is use or waiting for next cycle */
+#define MIN_MALLEABLE_PRIORITY  5    /* The minimum malleable priority */
+#define MAX_MALLEABLE_PRIORITY  255   /* The maximum malleable priority */
+
+/* The amount we reduce priority by with CPU intensive processes */
+#define MALLEABLE_PRIORITY_REDUCTION_FACTOR 2 
+
+/* The amount we reduce priority by with CPU intensive processes */
+#define MALLEABLE_PRIORITY_INCREASE_AMOUNT 1 
+
+#define MIN_MALLEABLE_CPU_MARK  0       /* Minimum malleable CPU mark */
+#define MAX_MALLEABLE_CPU_MARK  1000    /* Maximum malleable CPU mark */
+
+#define DEFAULT_CPU_LW_MARK  300       /* Default malleable LW CPU mark */
+#define DEFAULT_CPU_HW_MARK  400       /* Default malleable HW CPU mark */
+
+#endif
 
 extern	struct	procent proctab[];
 extern	int32	prcount;	/* Currently active processes		*/

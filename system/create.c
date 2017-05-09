@@ -51,6 +51,12 @@ pid32	create(
 	prptr->prsem = -1;
 	prptr->prparent = (pid32)getpid();
 	prptr->prhasmsg = FALSE;
+  
+#ifdef LF_MALLEABLE_PRIORITY
+  /* By default we are not malleable */
+  prptr->malleable = 0; 
+  prptr->cpu_usage = CPU_USAGE_IGNORE; 
+#endif
 
 	/* set up initial device descriptors for the shell		*/
 	prptr->prdesc[0] = CONSOLE;	/* stdin  is CONSOLE device	*/

@@ -42,6 +42,29 @@ extern	syscall	control(did32, int32, int32, int32);
 /* in file create.c */
 extern	pid32	create(void *, uint32, pri16, char *, uint32, ...);
 
+#ifdef LF_MALLEABLE_PRIORITY
+/* in file malleable.c */
+extern syscall set_malleable(pid32);
+
+/* in file malleable.c */
+extern syscall clear_malleable(pid32);
+
+/* in file malleable.c */
+extern syscall is_malleable(pid32, uint16*);
+
+/* in file malleable.c */
+extern syscall set_malleable_levels(uint16, uint16);
+
+/* in file malleable.c */
+extern syscall get_malleable_levels(uint16*, uint16*);
+
+/* in file malleable.c */
+extern syscall set_malleable_verbose();
+
+/* in file malleable.c */
+extern syscall clear_malleable_verbose();
+#endif
+
 /* in file ctxsw.S */
 extern	void	ctxsw(void *, void *);
 
