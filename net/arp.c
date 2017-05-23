@@ -121,10 +121,10 @@ status	arp_resolve (
 
 	/* Send the packet ARP_RETRY times and await response */
 
-	msg = recvclr();
+	msg = recvclr(0);
 	for (i=0; i<ARP_RETRY; i++) {
 		write(ETHER0, (char *)&apkt, sizeof(struct arppacket));
-		msg = recvtime(ARP_TIMEOUT);
+		msg = recvtime(0, ARP_TIMEOUT);
 		if (msg == TIMEOUT) {
 			continue;
 		} else if (msg == SYSERR) {
@@ -214,7 +214,7 @@ void	arp_in (
 		if (arptr->arstate == AR_PENDING) {
 			/* Mark resolved and notify waiting process */
 			arptr->arstate = AR_RESOLVED;
-			send(arptr->arpid, OK);
+			send(arptr->arpid, OK, 0);
 		}
 	}
 

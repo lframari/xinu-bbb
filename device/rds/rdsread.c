@@ -86,7 +86,7 @@ devcall	rdsread (
 
 	/* Prepare to receive message when read completes */
 
-	recvclr();
+	recvclr(0);
 
 	/* Signal the semaphore to start communication */
 
@@ -94,7 +94,7 @@ devcall	rdsread (
 
 	/* Block to wait for a message */
 
-	bptr = (struct rdbuff *)receive();
+	bptr = (struct rdbuff *)receive(0);
 	if (bptr == (struct rdbuff *)SYSERR) {	
 		return SYSERR;
 	}

@@ -28,6 +28,10 @@
 #define	INITPRIO	20	/* Initial process priority		*/
 #define	INITRET		userret	/* Address to which process returns	*/
 
+/* Message definitions */
+#define MAX_MSG_SLOTS   32
+#define MSG_ALL_SLOTS   0xFFFFFFFF
+
 /* Inline code to check process ID (assumes interrupts are disabled)	*/
 
 #define	isbadpid(x)	( ((pid32)(x) < 0) || \
@@ -49,9 +53,11 @@ struct procent {		/* Entry in the process table		*/
 	char	prname[PNMLEN];	/* Process name				*/
 	sid32	prsem;		/* Semaphore on which process waits	*/
 	pid32	prparent;	/* ID of the creating process		*/
-	umsg32	prmsg;		/* Message sent to this process		*/
-	bool8	prhasmsg;	/* Nonzero iff msg is valid		*/
+	umsg32	prmsg[MAX_MSG_SLOTS];		/* Message sent to this process		*/
+	uint32	prhasmsg;	/* Bit Nonzero iff msg is valid	for bit (slot)	*/
 	int16	prdesc[NDESC];	/* Device descriptors for process	*/
+  int16 pad1;
+  int32 pad2;
 };
 
 /* Marker for the top of a process stack (used to help detect overflow)	*/

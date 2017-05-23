@@ -299,12 +299,12 @@ process	shell (
 		proctab[child].prdesc[0] = stdinput;
 		proctab[child].prdesc[1] = stdoutput;
 
-		msg = recvclr();
+		msg = recvclr(0);
 		resume(child);
 		if (! backgnd) {
-			msg = receive();
+			msg = receive(0);
 			while (msg != child) {
-				msg = receive();
+				msg = receive(0);
 			}
 		}
     }

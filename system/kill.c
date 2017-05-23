@@ -25,7 +25,7 @@ syscall	kill(
 		xdone();
 	}
 
-	send(prptr->prparent, pid);
+	send(prptr->prparent, pid, 0);
 	for (i=0; i<3; i++) {
 		close(prptr->prdesc[i]);
 	}

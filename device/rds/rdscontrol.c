@@ -68,7 +68,7 @@ devcall	rdscontrol (
 
 		/* Prepare to wait until item is processed */
 
-		recvclr();
+		recvclr(0);
 
 		/* Signal then semaphore to start communication */
 
@@ -76,7 +76,7 @@ devcall	rdscontrol (
 
 		/* Block to wait for a message */
 
-		bptr = (struct rdbuff *)receive();
+		bptr = (struct rdbuff *)receive(0);
 		if (bptr == (struct rdbuff *)SYSERR) {	
 			return SYSERR;
 		}

@@ -411,13 +411,13 @@ extern	syscall	read(did32, char *, uint32);
 extern	status	ready(pid32);
 
 /* in file receive.c */
-extern	umsg32	receive(void);
+extern	umsg32	receive( uint32 );
 
 /* in file recvclr.c */
-extern	umsg32	recvclr(void);
+extern	umsg32	recvclr( uint32 );
 
 /* in file recvtime.c */
-extern	umsg32	recvtime(int32);
+extern	umsg32	recvtime( uint32, int32 );
 
 /* in file resched.c */
 extern	void	resched(void);
@@ -511,7 +511,7 @@ extern	syscall	semdelete(sid32);
 extern	syscall	semreset(sid32, int32);
 
 /* in file send.c */
-extern	syscall	send(pid32, umsg32);
+extern	syscall	send(pid32, umsg32, uint32 );
 
 /* in file shell.c */
 extern 	process shell(did32);

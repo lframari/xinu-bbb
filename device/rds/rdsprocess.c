@@ -100,7 +100,7 @@ void	rdsprocess (
 
 		/* Send a message to waiting process */
 
-		send(bptr->rd_pid, (uint32)bptr);
+		send(bptr->rd_pid, (uint32)bptr, 0);
 
 		/* If other processes are waiting to read the  */
 		/*   block, notify them and remove the request */
@@ -109,7 +109,7 @@ void	rdsprocess (
 		while (qptr != (struct rdbuff *)&rdptr->rd_rtnext) {
 			if (qptr->rd_blknum == bptr->rd_blknum) {
 				bptr->rd_refcnt++;
-				send(qptr->rd_pid,(uint32)bptr);
+				send(qptr->rd_pid,(uint32)bptr, 0);
 
 				/* Unlink request from queue	*/
 
@@ -188,7 +188,7 @@ void	rdsprocess (
 
 		/* Send a message to the waiting process */
 
-		send(bptr->rd_pid, OK);
+		send(bptr->rd_pid, OK, 0);
 
 		/* Unlink buffer from the request queue */
 

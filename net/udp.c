@@ -61,7 +61,7 @@ void	udp_in(
 			}
 			if (udptr->udstate == UDP_RECV) {
 				udptr->udstate = UDP_USED;
-				send (udptr->udpid, OK);
+				send (udptr->udpid, OK, 0);
 			}
 			restore(mask);
 			return;
@@ -185,8 +185,8 @@ int32	udp_recv (
 	if (udptr->udcount == 0) {		/* No packet is waiting	*/
 		udptr->udstate = UDP_RECV;
 		udptr->udpid = currpid;
-		msg = recvclr();
-		msg = recvtime(timeout);	/* Wait for a packet	*/
+		msg = recvclr(0);
+		msg = recvtime(0, timeout);	/* Wait for a packet	*/
 		udptr->udstate = UDP_USED;
 		if (msg == TIMEOUT) {
 			restore(mask);
@@ -268,8 +268,8 @@ int32	udp_recvaddr (
 	if (udptr->udcount == 0) {		/* No packet is waiting */
 		udptr->udstate = UDP_RECV;
 		udptr->udpid = currpid;
-		msg = recvclr();
-		msg = recvtime(timeout);	/* Wait for a packet	*/
+		msg = recvclr(0);
+		msg = recvtime(0, timeout);	/* Wait for a packet	*/
 		udptr->udstate = UDP_USED;
 		if (msg == TIMEOUT) {
 			restore(mask);

@@ -90,7 +90,7 @@ void	icmp_in(
 	}
 	if (icmptr->icstate == ICMP_RECV) {
 		icmptr->icstate = ICMP_USED;
-		send (icmptr->icpid, OK);
+		send (icmptr->icpid, OK, 0);
 	}
 	restore(mask);
 	return;
@@ -183,8 +183,8 @@ int32	icmp_recv (
 	if (icmptr->iccount == 0) {		/* No packet is waiting */
 		icmptr->icstate = ICMP_RECV;
 		icmptr->icpid = currpid;
-		msg = recvclr();
-		msg = recvtime(timeout);	/* Wait for a reply */
+		msg = recvclr(0);
+		msg = recvtime(0, timeout);	/* Wait for a reply */
 		icmptr->icstate = ICMP_USED;
 		if (msg == TIMEOUT) {
 			restore(mask);
