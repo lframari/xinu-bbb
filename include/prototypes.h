@@ -331,28 +331,28 @@ extern	void	pdumph(struct netpacket *);
 extern	void	platinit(void);
 
 /* in file ptclear.c */
-extern	void	_ptclear(struct ptentry *, uint16, int32 (*)(int32));
+extern	void	_ptclear(struct ptentry *, uint16, int32 (*)(int32, uint16));
 
 /* in file ptcount.c */
-extern	int32	ptcount(int32);
+extern	int32	ptcount(int32, uint16);
 
 /* in file ptcreate.c */
 extern	syscall	ptcreate(int32);
 
 /* in file ptdelete.c */
-extern	syscall	ptdelete(int32, int32 (*)(int32));
+extern	syscall	ptdelete(int32, int32 (*)(int32, uint16));
 
 /* in file ptinit.c */
 extern	syscall	ptinit(int32);
 
 /* in file ptrecv.c */
-extern	uint32	ptrecv(int32);
+extern	uint32	ptrecv(int32, uint16);
 
 /* in file ptreset.c */
-extern	syscall	ptreset(int32, int32 (*)(int32));
+extern	syscall	ptreset(int32, int32 (*)(int32, uint16));
 
 /* in file ptsend.c */
-extern	syscall	ptsend(int32, umsg32);
+extern	syscall	ptsend(int32, uint16, umsg32);
 
 /* in file putc.c */
 extern	syscall	putc(did32, char);

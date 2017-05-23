@@ -8,7 +8,7 @@
  */
 syscall	ptdelete(
 	  int32		portid,		/* ID of port to delete		*/
-	  int32		(*disp)(int32)	/* Function to call to dispose	*/
+	  int32		(*disp)(int32, uint16)	/* Function to call to dispose	*/
 	)				/*    of waiting messages	*/
 {
 	intmask	mask;			/* Saved interrupt mask		*/

@@ -28,7 +28,9 @@ syscall	ptinit(
 
 	for (i=0 ; i<NPORTS ; i++) {
 		porttab[i].ptstate = PT_FREE;
-		porttab[i].ptseq = 0;
+		porttab[i].ptseq = 0; 
+    porttab[i].wldcrdlstnr = 0;
+    porttab[i].ptnumtags = 0;
 	}
 	ptnextid = 0;
 

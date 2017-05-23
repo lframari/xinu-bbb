@@ -7,13 +7,14 @@
  *------------------------------------------------------------------------
  */
 syscall	ptcreate(
-	  int32		count		/* Size of port			*/
+	  int32		count		/* Size of port	for all tags and wildcard		*/
 	)
 {
 	intmask	mask;			/* Saved interrupt mask		*/
 	int32	i;			/* Counts all possible ports	*/
 	int32	ptnum;			/* Candidate port number to try	*/
 	struct	ptentry	*ptptr;		/* Pointer to port table entry	*/
+  struct pttagdata* ptag;   /* Tag related data */
 
 	mask = disable();
 	if (count < 0) {
@@ -32,11 +33,24 @@ syscall	ptcreate(
 		ptptr= &porttab[ptnum];
 		if (ptptr->ptstate == PT_FREE) {
 			ptptr->ptstate = PT_ALLOC;
+      
+      /* These are the data pump or collective messages read by the wild card */
+      /* They are only utilized once someone attempts to ptrecv on the wildcard tag */
 			ptptr->ptssem = semcreate(count);
 			ptptr->ptrsem = semcreate(0);
+      ptptr->wldcrdlstnr = 0;
+      
 			ptptr->pthead = ptptr->pttail = NULL;
 			ptptr->ptseq++;
 			ptptr->ptmaxcnt = count;
+      
+      /* The tag depth will be the same as the main depth */
+      ptptr->pttagdepth = count;
+      
+      /* Create the default tag */
+      ptcreatetag(ptptr, PT_TAG_NONE);
+      
+      
 			restore(mask);
 			return ptnum;
 		}

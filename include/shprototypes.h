@@ -75,3 +75,7 @@ extern	shellcmd  xsh_softreset	(int32, char *[]);
 
 /* in file xsh_ledctl.c */
 extern	shellcmd  xsh_ledctl	(int32, char *[]);
+
+/* in file xsh_lab06.c */
+extern	shellcmd  xsh_lab06	(int32, char *[]);
+
