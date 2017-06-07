@@ -85,6 +85,18 @@ extern	syscall	freebuf(char *);
 /* in file freemem.c */
 extern	syscall	freemem(char *, uint32);
 
+/* in file future.c */
+extern  void future_processing();
+
+/* in file future.c */
+extern  fsid32 future_sched(uint32 msdelay, uint32 (*func)(), uint32, ...);
+
+/* in file future.c */
+extern  syscall future_cancel(fsid32);
+
+/* in file future.c */
+extern  syscall future_wait(fsid32, uint32*);
+
 /* in file getbuf.c */
 extern	char	*getbuf(bpid32);
 
@@ -113,6 +125,9 @@ extern	uint32	getticks(void);
 
 /* in file gettime.c */
 extern	status	gettime(uint32 *);
+
+/*in file gettimems.c */
+extern syscall	gettimems(uint32 *);
 
 /* in file getutime.c */
 extern	status	getutime(uint32 *);

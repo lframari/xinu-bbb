@@ -21,6 +21,12 @@ struct	procent	proctab[NPROC];	/* Process table			*/
 struct	sentry	semtab[NSEM];	/* Semaphore table			*/
 struct	memblk	memlist;	/* List of free memory blocks		*/
 
+struct	fsent fstab[NFUTURES]; /* Future schedule table */
+uint32	fscount;	/* Currently in use future schedule entries		*/
+struct  fsent* fsfreehead;  /* The head of the free list of FS entries */
+struct  fsent* fsfreetail;  /* The tail of the free list of FS entries */
+struct  fsent* fswaiting; /* The FS entries that are waiting */
+
 /* Active system status */
 
 int	prcount;		/* Total number of live processes	*/
@@ -152,6 +158,7 @@ static	void	sysinit()
 	int32	i;
 	struct	procent	*prptr;		/* Ptr to process table entry	*/
 	struct	sentry	*semptr;	/* Ptr to semaphore table entry	*/
+  struct fsent *fsptr;      /* Ptr to a future schedule entry */
 
 	kprintf(CONSOLE_RESET);
 	kprintf("\n%s\n\n", VERSION);
@@ -223,6 +230,38 @@ static	void	sysinit()
 	for (i = 0; i < NDEVS; i++) {
 		init(i);
 	}
+  
+  /* Initialize the future schedules */
+  for (i = 0; i < NFUTURES; i++) {
+    fsptr = &fstab[i];
+    
+    fsptr->fsstate    = FS_FREE;
+    fsptr->fsid       = i;
+    fsptr->fspsid     = -1;
+    fsptr->fsdelayms  = 0;
+    fsptr->fsname[0]  = NULLCH;
+    fsptr->fsfunc     = NULL;
+    fsptr->fsnumargs  = 0;
+    fsptr->fssem      = 0;
+    fsptr->fsreturn   = 0;
+    fsptr->fsnext     = NULL;
+    fsptr->fsprev     = NULL;
+    if ( i < (NFUTURES - 1)) {
+       fsptr->fsnext     = &fstab[i + 1];
+    }
+    
+    if ( i > 0) {
+       fsptr->fsprev     = &fstab[i - 1];
+    }
+    
+  }
+  
+  /* Initialize the Future schedule table */
+  fsfreehead = &fstab[0];
+  fsfreetail = &fstab[NFUTURES - 1];
+  fswaiting = NULL; 
+  fscount = 0;
+   
 	return;
 }
 

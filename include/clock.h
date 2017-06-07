@@ -1,6 +1,7 @@
 /* clock.h */
 
 extern	uint32	clktime;	/* current time in secs since boot	*/
+extern	uint32	clktimems;	/* current time in millisecs since boot	*/
 extern  uint32  count1000;      /* ms since last clock tick             */
 
 extern	qid16	sleepq;		/* queue for sleeping processes		*/

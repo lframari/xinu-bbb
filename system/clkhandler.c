@@ -23,6 +23,9 @@ void	clkhandler()
 	/* Acknowledge the interrupt */
 
 	csrptr->tisr = AM335X_TIMER1MS_TISR_OVF_IT_FLAG;
+  
+  /* Increment the ms timer */
+  ++clktimems;
 
 	/* Increment 1000ms counter */
 
@@ -34,6 +37,9 @@ void	clkhandler()
 		clktime++;
 		count1000 = 0;
 	}
+  
+  /* See what is happening in our future scheduling */
+  future_processing();
 
 	/* check if sleep queue is empty */
 
