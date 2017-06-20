@@ -84,13 +84,13 @@ devcall	lfsopen (
 	if (! Lf_data.lf_dirpresent) {
 	    retval = read(Lf_data.lf_dskdev,(char *)dirptr,LF_AREA_DIR);
 	    if (retval == SYSERR ) {
-		signal(Lf_data.lf_mutex);
-		return SYSERR;
+        signal(Lf_data.lf_mutex);
+        return SYSERR;
 	    }
 	    if (lfscheck(dirptr) == SYSERR ) {
-		kprintf("Disk does not contain a Xinu file system\n");
-		signal(Lf_data.lf_mutex);
-		return SYSERR;
+        kprintf("Disk does not contain a Xinu file system\n");
+        signal(Lf_data.lf_mutex);
+        return SYSERR;
 	    }
 	    Lf_data.lf_dirpresent = TRUE;
 	}

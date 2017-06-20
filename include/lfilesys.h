@@ -36,7 +36,8 @@
 /*  *assumes* the underlying disk has a block size of 512 bytes)  */
 
 #ifndef	LF_DISK_DEV
-#define	LF_DISK_DEV	SYSERR
+#define	LF_DISK_DEV RAM0
+/* #define	LF_DISK_DEV	SYSERR */
 #endif
 
 #define	LF_MODE_R	F_MODE_R	/* Mode bit for "read"		*/
@@ -90,6 +91,11 @@ struct	lfiblk		{		/* Format of index block	*/
 
 #define	ib2disp(ib)	(((ib)%7)*sizeof(struct lfiblk))
 
+/* structure used to return data about a given directory */
+struct lfsdirentry {
+  uint32   filesize;               /* File size in bytes */
+  char     filename[LF_NAME_LEN];	/* Null-terminated file name	*/
+};
 
 /* Structure used in each directory entry for the local file system */
 
@@ -168,6 +174,9 @@ struct	lflcblk	{			/* Local file control block	*/
 
 extern	struct	lfdata	Lf_data;
 extern	struct	lflcblk	lfltab[];
+
+/* The Local File System Ram Disk */
+extern  did32		lframdisk;
 
 /* Control functions */
 

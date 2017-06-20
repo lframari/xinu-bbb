@@ -30,6 +30,11 @@ const	struct	cmdent	cmdtab[] = {
 	{"uptime",	FALSE,	xsh_uptime},
   {"softreset",	FALSE,	xsh_softreset},
   {"ledctl",	FALSE,	xsh_ledctl},
+  {"fappend",	FALSE,	xsh_fappend},
+  {"fcat",	FALSE,	xsh_fcat},
+  {"fls",	FALSE,	xsh_fls},
+  {"ftouch",	FALSE,	xsh_ftouch},
+  {"ftruncate",	FALSE,	xsh_ftruncate},
 	{"?",		FALSE,	xsh_help}
 
 };

@@ -254,6 +254,9 @@ extern  status  lfscreate(did32, ibid32, uint32);
 /* in file lfsinit.c */
 extern	devcall	lfsinit(struct dentry *);
 
+/* in file lfsinfo.c */
+syscall	lfsinfo (uint32*, struct lfsdirentry[LF_NUM_DIR_ENT]);
+
 /* in file lfsopen.c */
 extern	devcall	lfsopen(struct dentry *, char *, char *);
 

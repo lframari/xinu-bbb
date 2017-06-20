@@ -4,6 +4,7 @@
 
 #include <xinu.h>
 #include <string.h>
+#include <ramdisk.h>
 
 extern	void	start(void);	/* Start of Xinu code			*/
 extern	void	*_end;		/* End of Xinu code			*/
@@ -152,6 +153,8 @@ static	void	sysinit()
 	int32	i;
 	struct	procent	*prptr;		/* Ptr to process table entry	*/
 	struct	sentry	*semptr;	/* Ptr to semaphore table entry	*/
+  did32		lframdisk;        /* The RAM Disk used for the file system */
+  status lfsstatus;         /* The status of the LFS Create */
 
 	kprintf(CONSOLE_RESET);
 	kprintf("\n%s\n\n", VERSION);
@@ -167,7 +170,7 @@ static	void	sysinit()
 	/* Initialize free memory list */
 	
 	meminit();
-
+ 
 	/* Initialize system variables */
 
 	/* Count the Null process as the first process in the system */
@@ -223,6 +226,23 @@ static	void	sysinit()
 	for (i = 0; i < NDEVS; i++) {
 		init(i);
 	}
+  
+  /* Open our ram disk */
+  lframdisk = open(RAM0, "", "");
+  
+  /* Make sure we are open */
+  if (SYSERR == lframdisk) {
+    kprintf("\n\nCould not open ram disk!\n\n");
+  }
+  
+  /* Create our local file system on half of the ram disk */
+  /* lfscreate closes the RAM disk */
+  lfsstatus = lfscreate(lframdisk, 64, (RM_BLKS / 4) * RM_BLKSIZ);
+  
+  /* Make sure we are open */
+  if (SYSERR == lfsstatus) {
+    kprintf("\n\nCould not create the local file system!\n\n");
+  }
 	return;
 }
 

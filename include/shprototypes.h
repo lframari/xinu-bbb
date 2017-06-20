@@ -75,3 +75,18 @@ extern	shellcmd  xsh_softreset	(int32, char *[]);
 
 /* in file xsh_ledctl.c */
 extern	shellcmd  xsh_ledctl	(int32, char *[]);
+
+/* in file xsh_fappend.c */
+extern	shellcmd  xsh_fappend	(int32, char *[]);
+
+/* in file xsh_fcat.c */
+extern	shellcmd  xsh_fcat	(int32, char *[]);
+
+/* in file xsh_fls.c */
+extern	shellcmd  xsh_fls	(int32, char *[]);
+
+/* in file xsh_ftouch.c */
+extern	shellcmd  xsh_ftouch	(int32, char *[]);
+
+/* in file xsh_ftruncate.c */
+extern	shellcmd  xsh_ftruncate	(int32, char *[]);

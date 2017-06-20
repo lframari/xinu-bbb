@@ -23,6 +23,7 @@ status	lfscreate (
 	dbid32	dbindex;		/* Index for data blocks	*/
 	int32	retval;			/* Return value from func call	*/
 	int32	i;			/* Loop index			*/
+  uint32	reverse;		/* LFS_ID in reverse byte order	*/
 
 	/* Compute total sectors on disk */
 
@@ -44,6 +45,19 @@ status	lfscreate (
 	dbindex= (dbid32)(ibsectors + 1);
 	dir.lfd_dfree = dbindex;
 	dblks = sectors - ibsectors - 1;
+  
+  /* Our special XINU signature */
+  dir.lfd_fsysid   = LFS_ID;
+	dir.lfd_allzeros = 0x00000000;
+  dir.lfd_allones  = 0xffffffff;
+  
+  reverse = ((LFS_ID>>24) & 0x000000ff) | 
+		  ((LFS_ID>> 8) & 0x0000ff00) |
+		  ((LFS_ID<< 8) & 0x00ff0000) |
+		  ((LFS_ID<<24) & 0xff000000) ;
+
+	dir.lfd_revid = reverse; 
+         
 	retval = write(disk,(char *)&dir, LF_AREA_DIR);
 	if (retval == SYSERR) {
 		return SYSERR;
